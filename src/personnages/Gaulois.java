@@ -15,7 +15,7 @@ public class Gaulois {
 	}
 	
 	public void parler(String texte) {
-		System.out.println(prendreparole() + "<<" + texte + ">>");
+		System.out.println(prendreparole() + "«" + texte + "»");
 	}
 
 	private String prendreparole() {
@@ -27,7 +27,12 @@ public class Gaulois {
 		romain.recevoirCoup(force/3);
 	}
 	
-//	public String toString() {
-//		re
-//	}
+	public String toString() {
+		return "Gaulois [nom=" + nom + ", force =" + force + ", effetPotion=" + effetPotion + "]";
+	}
+	
+	public static void name(String[] args) {
+		//TODO créer un main permettant de tester la classe Gaulois
+	}
+	
 }
