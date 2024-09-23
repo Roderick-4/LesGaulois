@@ -15,10 +15,10 @@ public class Gaulois {
 	}
 	
 	public void parler(String texte) {
-		System.out.println(prendreparole() + "«" + texte + "»");
+		System.out.println(prendreParole() + "'" + texte + "'");
 	}
 
-	private String prendreparole() {
+	private String prendreParole() {
 		return "Le gaulois " + nom + ":";
 	}
 	
@@ -31,8 +31,13 @@ public class Gaulois {
 		return "Gaulois [nom=" + nom + ", force =" + force + ", effetPotion=" + effetPotion + "]";
 	}
 	
-	public static void name(String[] args) {
-		//TODO créer un main permettant de tester la classe Gaulois
+	public static void main(String[] args) {
+		Gaulois asterix = new Gaulois("AstÃ©rix",8);
+		System.out.println(asterix);
+		asterix.parler("Bonjour");
+		Romain minus = new Romain ("Minus",6);
+		minus.parler("Yo");
+		minus.recevoirCoup(asterix.force);
 	}
 	
 }
