@@ -24,10 +24,18 @@ public class Romain {
 	public void recevoirCoup(int forceCoup) {
 		force -= forceCoup;
 		if (force > 0) {
-			parler("Aïe");
+			parler("Aie");
 		} else {
 			parler("J'abandonne...");
 		}
+	}
+	
+	public static void main(String[] args) {
+		Gaulois asterix = new Gaulois("Asterix",8);
+		System.out.println(asterix);
+		asterix.parler("Bonjour");
+		Romain minus = new Romain ("Minus",6);
+		minus.parler("Yo");
 	}
 
 }
