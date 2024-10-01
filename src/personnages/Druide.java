@@ -3,6 +3,7 @@ package personnages;
 import java.util.Random;
 
 public class Druide {
+	private static final int FORCE_MAXIMUM = 7;
 	private String nom;
 	private int effetPotionMin;
 	private int effetPotionMax;
@@ -32,7 +33,7 @@ public class Druide {
 
 	public void preparerPotion() {
 		forcePotion = random.nextInt(effetPotionMax - effetPotionMin) + effetPotionMin;
-		if (forcePotion > 7) {
+		if (forcePotion > FORCE_MAXIMUM) {
 			parler("J'ai préparé une super potion de force " + forcePotion);
 		} else {
 			parler("Je n'ai pas trouvé tous les ingrédients, ma potion est seulement de force " + forcePotion);
