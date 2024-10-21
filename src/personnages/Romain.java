@@ -25,6 +25,11 @@ public class Romain {
 		return force;
 	}
 	
+	public int getNbEquipement() {
+	    return nbEquipement;
+	}
+
+	
 	public void parler(String texte) {
 		System.out.println(prendreParole() + "'" + texte + "'");
 	}
@@ -47,82 +52,84 @@ public class Romain {
 //	}
 	
 	public Equipement[] recevoirCoup(int forceCoup) {
-		Equipement[] equipementEjecte = null;
-		assert force > 0; // Precondition
-		int oldForce = force;
-		forceCoup = calculResistanceEquipement(forceCoup);
-		force -= forceCoup;
-		
-		if (force > 0) {
-			parler("Aie");
-		} else {
-			equipementEjecte = ejecterEquipement();
-			parler("J'abandonne...");
-		}
-		
-		if (force == 0) {
-			parler("Aie");
-			
-			} else {
-				equipementEjecte = ejecterEquipement();
-				parler("J'abandonne...");
-			}
-		
-		assert force < oldForce; // post condition la force a diminu�e
-		return equipementEjecte;
-	 }
+	    Equipement[] equipementEjecte = null;
+	    assert force > 0 : "La force doit être positive avant de recevoir un coup";
+	    int oldForce = force;
+	    int forceCoupInitial = forceCoup; 
+	    forceCoup = calculResistanceEquipement(forceCoup); 
+
+	    if (forceCoup < forceCoupInitial) {
+	        forceCoup = 0;
+	    }
+	    equipementEjecte = ejecterEquipement();
+	    
+	    force -= forceCoup;
+
+	    if (force < 0) {
+	        force = 0;
+	    }
+
+	    if (force > 0) {
+	        parler("Aie");
+	    } else {
+	        parler("J'abandonne...");
+	    }
+
+	    assert force <= oldForce : "La force ne peut pas augmenter après un coup";
+	    return equipementEjecte;
+	}
+
 
 	public void sEquiper(Equipement equipement) {
-		switch (nbEquipement) {
-		case 2:
-			System.out.println("Le romain " + nom + "est deja bien protege !");
-			break;
-		case 1:
-			if (equipementsTab[0] == equipement) {
-				System.out.println("Le romain " + nom + " s'equipe avec un " + equipement + ".");
-				nbEquipement += 1;
-			}
-			else {
-				System.out.println("Le soldat s'equipe avec un " + equipement + "!");
-				equipementsTab[nbEquipement] = equipement;
-				nbEquipement++;
-			}
-			break;
-			
-		case 0 :
-			System.out.println("Le soldat s'equipe avec un " + equipement + "!");
-			equipementsTab[nbEquipement] = equipement;
-			nbEquipement++;
-			break;
-		default:
-			break;
-		}
+	    switch (nbEquipement) {
+	        case 2:
+	            System.out.println("Le romain " + nom + " est déjà bien protégé !");
+	            break;
+	        case 1:
+	            // Vérifier si le Romain possède déjà l'équipement qu'il veut ajouter
+	            if (equipementsTab[0] == equipement) {
+	                System.out.println("Le romain " + nom + " possède déjà un " + equipement + ".");
+	            } else {
+	                System.out.println("Le soldat s'équipe avec un " + equipement + " !");
+	                equipementsTab[nbEquipement] = equipement;
+	                nbEquipement++;
+	            }
+	            break;
+	        case 0:
+	            System.out.println("Le soldat s'équipe avec un " + equipement + " !");
+	            equipementsTab[nbEquipement] = equipement;
+	            nbEquipement++;
+	            break;
+	        default:
+	            System.out.println("Erreur dans le nombre d'équipements.");
+	            break;
+	    }
 	}
+
 	
 	private int calculResistanceEquipement(int forceCoup) {
-		texte = "Ma force est de " + this.force + ", et la force du coup est de " + forceCoup;
-		int resistanceEquipement = 0;
-		
-		if (nbEquipement != 0) {
-		    texte += "\nMais heureusement, grace a mon equipement sa force est diminué de ";
-		    
-		    for (int i = 0; i < nbEquipement;) {
-		        if ((equipementsTab[i] != null && equipementsTab[i].equals(Equipement.BOUCLIER)) == true) {
-		            resistanceEquipement += 8;
-		            
-		        } else {
-		            System.out.println("Equipement casque");
-		            resistanceEquipement += 5;
-		      }
-		        i++;
-		  }
-		    texte += resistanceEquipement + "!";
-	  }
+	    texte = "Ma force est de " + this.force + ", et la force du coup est de " + forceCoup;
+	    int resistanceEquipement = 0;
 
-	parler(texte);
-	forceCoup -= resistanceEquipement;
-	return forceCoup;
+	    if (nbEquipement != 0) {
+	        texte += "\nMais heureusement, grâce à mon équipement sa force est diminuée de ";
+
+	        for (int i = 0; i < nbEquipement; i++) {
+	            if (equipementsTab[i] != null && equipementsTab[i].equals(Equipement.BOUCLIER)) {
+	                resistanceEquipement += 8;
+	            } else {
+	                System.out.println("Equipement casque");
+	                resistanceEquipement += 5;
+	            }
+	        }
+	        texte += resistanceEquipement + "!";
+	    }
+
+	    parler(texte);
+	    forceCoup -= resistanceEquipement;
+	    return forceCoup;
 	}
+
 	
 	private Equipement[] ejecterEquipement() {
 		Equipement[] equipementEjecte = new Equipement[nbEquipement];
@@ -131,13 +138,12 @@ public class Romain {
 		
 		for (int i = 0; i < nbEquipement; i++) {
 			if (equipementsTab[i] != null) {
-				equipementEjecte[nbEquipementEjecte] =
-				equipementsTab[i];
-				nbEquipementEjecte++;
-				equipementsTab[i] = null;
+				equipementEjecte[nbEquipementEjecte] = equipementsTab[i];
+	            nbEquipementEjecte++;
+	            equipementsTab[i] = null;
 				}
 		    }
-		
+		nbEquipement = 0;
 		return equipementEjecte;
 	 }
 
@@ -146,13 +152,15 @@ public class Romain {
 		Romain minus;
 		minus = new Romain("Minus",6);
 		minus.parler("Bonjour");
-		minus.recevoirCoup(7);
-//		System.out.println(Equipement.CASQUE);
-//		System.out.println(Equipement.BOUCLIER);
-		minus.sEquiper(Equipement.CASQUE);
 		minus.sEquiper(Equipement.CASQUE);
 		minus.sEquiper(Equipement.BOUCLIER);
-		minus.sEquiper(Equipement.CASQUE);
+		minus.recevoirCoup(11);
+	    System.out.println("La force de " + minus.getNom() + " est de " + minus.getForce() + ".");
+	    System.out.println("Le nombre d'équipements de " + minus.getNom() + " est de " + minus.getNbEquipement() + ".");
+		minus.recevoirCoup(5);
+	    System.out.println("La force de " + minus.getNom() + " est de " + minus.getForce() + ".");
+
+
 	}
 
 }
