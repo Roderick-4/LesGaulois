@@ -40,8 +40,13 @@ public class Romain {
 	    if (forceCoup < forceCoupInitial) {
 	        forceCoup = 0;
 	    }
-		equipementEjecte = ejecterEquipement();
+	    if (forceCoup + 8 == forceCoupInitial) {
+			equipementEjecte = ejecterEquipement();
 
+		} else if (forceCoup + 5 == forceCoupInitial) {
+			equipementEjecte = ejecterEquipement();
+
+		}
 	    force -= forceCoup;
 	    if (force < 0) {
 	        force = 0;
@@ -80,6 +85,13 @@ public class Romain {
 			equipements[nbEquipement] = stuff;
 			nbEquipement++;
 			System.out.println("Le soldat " + getNom() + " s'équipe avec un " + stuff.toString());
+			
+			if (equipements[nbEquipement] != null && equipements[nbEquipement].equals(Equipement.BOUCLIER)) {
+				force += 8;
+			} else if (equipements[nbEquipement] != null && equipements[nbEquipement].equals(Equipement.CASQUE)) {
+				force += 5;
+			}
+			
 			break;
 		case 1:
 			if (equipements[0] == stuff) {
@@ -88,6 +100,12 @@ public class Romain {
 				equipements[nbEquipement] = stuff;
 				nbEquipement++;
 				System.out.println("Le soldat " + getNom() + " s'équipe avec un " + stuff.toString());
+				
+				if (equipements[nbEquipement].equals(Equipement.BOUCLIER)) {
+					force += 8;
+				} else if (equipements[nbEquipement].equals(Equipement.CASQUE)) {
+					force += 5;
+				}
 			}
 			break;
 		default:
@@ -97,26 +115,55 @@ public class Romain {
 	}
 
 	
+//	private int calculResistanceEquipement(int forceCoup) {
+//		String texte;
+//		texte = "Ma force est de " + this.force + ", et la force du coup est de " + forceCoup;
+//		int resistanceEquipement = 0;
+//		if (nbEquipement != 0) {
+//			texte += "\nMais heureusement, grace à mon équipement sa force est diminué de ";
+//			for (int i = 0; i < nbEquipement; i++) {
+//				if ((equipements[i] != null && equipements[i].equals(Equipement.BOUCLIER))) {
+//					resistanceEquipement += 8;
+//				} else {
+//					System.out.println("Equipement casque");
+//					resistanceEquipement += 5;
+//				}
+//			}
+//			texte = +resistanceEquipement + "!";
+//		}
+//		parler(texte);
+//		forceCoup -= resistanceEquipement;
+//		return forceCoup;
+//	}
+	
 	private int calculResistanceEquipement(int forceCoup) {
-		String texte;
-		texte = "Ma force est de " + this.force + ", et la force du coup est de " + forceCoup;
-		int resistanceEquipement = 0;
-		if (nbEquipement != 0) {
-			texte += "\nMais heureusement, grace à mon équipement sa force est diminué de ";
-			for (int i = 0; i < nbEquipement; i++) {
-				if ((equipements[i] != null && equipements[i].equals(Equipement.BOUCLIER))) {
-					resistanceEquipement += 8;
-				} else {
-					System.out.println("Equipement casque");
-					resistanceEquipement += 5;
+	String texte;
+	texte = "Ma force est de " + this.force + ", et la force du coup est de " + forceCoup + "donc ma nouvelle force devient ";
+	if (nbEquipement != 0) {
+		
+		for (int i = 0; i < nbEquipement; i++) {
+			if ((equipements[i] != null && equipements[i].equals(Equipement.BOUCLIER))) {
+				if (forceCoup > 8) {
+					force -= 8;
+					forceCoup -= 8;
+				} else  {
+					force -= forceCoup;
+				}
+			} else {
+				System.out.println("Equipement casque");
+				if (forceCoup > 5) {
+					force -= 5;
+					forceCoup -= 5;
+				} else  {
+					force -= forceCoup;
 				}
 			}
-			texte = +resistanceEquipement + "!";
 		}
-		parler(texte);
-		forceCoup -= resistanceEquipement;
-		return forceCoup;
+		
 	}
+	parler(texte);
+	return forceCoup;
+}
 
 	
 	private Equipement[] ejecterEquipement() {
