@@ -6,7 +6,7 @@ public class Musee {
 	
 	public void donnerTrophees(Gaulois gaulois, Equipement equipement) {
 		if (nbTrophee < 200) {
-			trophees[nbTrophee] = new Trophee(gaulois, equipement);
+			trophees[nbTrophee] = new Trophee(gaulois, equipement).getEquipement();
 			nbTrophee++;
 		}
 	}
