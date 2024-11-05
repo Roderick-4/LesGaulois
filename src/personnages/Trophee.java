@@ -1,25 +1,24 @@
 package personnages;
 
 public class Trophee {
-	private int force;
-	private String nom;
-	private Gaulois gaulois = new Gaulois(nom,force);
-	private Equipement [] equipement = new Equipement[100];
+	private Gaulois gaulois;
+	private Equipement equipement;
 	
-	public Trophee(Gaulois gaulois, Equipement[] equipement){
+	
+	public Trophee(Gaulois gaulois, Equipement equipement) {
 		this.gaulois = gaulois;
 		this.equipement = equipement;
 	}
 	
+	public Equipement getEquipement() {
+		return equipement;
+	}
+
 	public Gaulois getGaulois() {
-		return this.gaulois;
+		return gaulois;
 	}
-	
-	public Equipement[] getEquipement() {
-		return this.equipement;
-	}
-	
-	public String donnerNom(Gaulois gaulois) {
+
+	public String donnerNom() {
 		return gaulois.getNom();
 	}
 }

@@ -24,33 +24,35 @@ public class Village {
    }
 	
 	public void ajouterHabitant(Gaulois gaulois) {
-		   villageois[this.nbVillageois] = gaulois;
-		   this.nbVillageois += 1;
-	   }
+		if (nbVillageois < villageois.length) {
+			villageois[nbVillageois] = gaulois;
+			nbVillageois += 1;
+		}
+	}
 	
 	public void afficherVillageois() {
-		   System.out.println("Dans le village du chef Abraracourcix vivent les legendaires gaulois :");
-		   for (int i=0; i<nbVillageois; i++) {
-			   System.out.println("-" + villageois[i].getNom());
-		   }
-	   }
+		System.out.println("Dans le village du chef " + villageois[0].getNom() +" vivent les legendaires gaulois :");
+		for (int i = 1; i < nbVillageois;) {
+			System.out.println("- " + villageois[i].getNom());
+			i++;
+			}
+	}
 
 	public static void main(String[] args) {
-			Village village = new Village("Village des Irreductibles", 30);
-		   
-		    Chef abraracourcix = new Chef("Abraracourcix", 6, village);
-		    village.setChef(abraracourcix);
-		    
-		    village.trouverHabitant(0);
-		   
-		    Gaulois asterix;
-		    asterix = new Gaulois("Asterix",8);
-		    village.ajouterHabitant(asterix);
-		    
-		    Gaulois obelix;
-		    obelix = new Gaulois("Obelix",25);
-		    village.ajouterHabitant(obelix);
-		    
-		    village.afficherVillageois();
+		Village village = new Village("Village des Irr�ductibles", 30);
+//		Gaulois gaulois = village.trouverHabitant(30);
+//		Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: Index 30 out of bounds for length 30
+//		premiere case du tableau == 0, donc dans un tableau a 30 elt, la derniere case a le num 29
+		Gaulois abraracourcix = new Gaulois("Abraracourcix", 6);
+		village.ajouterHabitant(abraracourcix);
+		Gaulois asterix = new Gaulois("asterix", 8);
+		village.ajouterHabitant(asterix);
+//		Gaulois gaulois = village.trouverHabitant(1);
+//		System.out.println(gaulois);
+//		Gaulois [nom=asterix, force=8]
+//		renvoie le gaulois dans la 2eme case, donc asterix
+		Gaulois obelix = new Gaulois("Obelix", 25);
+		village.ajouterHabitant(obelix);
+		village.afficherVillageois();
 	   }
 }
